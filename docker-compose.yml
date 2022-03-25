@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  jenkins:
+    image: nguyencuong382/jenkins-docker:v1
+    user: root
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - share_network
+    environment:
+      JENKINS_USER: $UID
+    ports:
+      - 9200:8080
+      - 50000:50000
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $PWD/jenkins_home:/var/jenkins_home
+      - /usr/bin/docker:/usr/bin/docker
+      
+networks:
+  share_network:
+    external: true
+
+# docker run -itd -e JENKINS_USER=$(id -u) \
+# -v /var/run/docker.sock:/var/run/docker.sock \
+# -v $(pwd)/jenkins_home:/var/jenkins_home \
+# -v $(which docker):/usr/bin/docker \
+# -p 9200:8080 -p 50000:50000  \
+# -u root \
+# jenkinsci-docker-compose:v1
