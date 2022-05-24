@@ -2,7 +2,7 @@ version: "3"
 
 services:
   jenkins:
-    image: nguyencuong382/jenkins-docker:v1
+    image: nguyencuong382/jenkins-docker:v2
     user: root
     build:
       context: .

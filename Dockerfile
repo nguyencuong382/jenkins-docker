@@ -7,3 +7,6 @@ RUN chmod 755 /usr/local/bin/docker-compose
 RUN usermod -a -G sudo jenkins
 RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER jenkins
+
+ADD ./gdrive_2.1.1_linux_386.tar.gz /usr/local/bin
+RUN sudo chmod +x /usr/local/bin/gdrive
