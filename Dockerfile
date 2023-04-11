@@ -1,4 +1,4 @@
-FROM jenkins/jenkins
+FROM jenkins/jenkins:2.373
 USER root
 
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
@@ -15,9 +15,13 @@ RUN curl https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz | tar xvz 
     curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
     chmod 755 /usr/local/bin/docker-compose
 
+RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64 && \
+    install -m 555 argocd-linux-amd64 /usr/local/bin/argocd && \
+    rm argocd-linux-amd64
+
 RUN usermod -a -G sudo jenkins
 RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER jenkins
 
-ADD ./gdrive_2.1.1_linux_386.tar.gz /usr/local/bin
+ADD ./gdrive_linux-x64.tar.gz /usr/local/bin
 RUN sudo chmod +x /usr/local/bin/gdrive
